@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView ivPostImage;
     private Button btnSubmit;
     private File photoFile;
+    private Button btnLogout;
     public String photoFileName = "photo.jpg";
 
     @Override
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         btnCaptureImage = findViewById(R.id.btnCaptureImage);
         ivPostImage = findViewById(R.id.ivPostImage);
         btnSubmit = findViewById(R.id.btnSubmit);
-
+        btnLogout =findViewById(R.id.btnLogout);
 
         btnCaptureImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +73,20 @@ public class MainActivity extends AppCompatActivity {
                 savePost(description,currentUser,photoFile);
             }
         });
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ParseUser.logOut();
+                ParseUser currentUser = ParseUser.getCurrentUser(); // this will now be null
+                goLoginActivity();
+            }
+        });
+    }
+
+    private void goLoginActivity() {
+        Intent i = new Intent(this,LoginActivity.class);
+        startActivity(i);
+        finish();
     }
 
     private void launchCamera() {
@@ -162,4 +177,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }
